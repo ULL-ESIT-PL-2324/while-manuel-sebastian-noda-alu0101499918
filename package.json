@@ -10,7 +10,8 @@
     "test": "npm run test-pass; npm run test-err",
     "test-pass": "npm run compile && mocha test/test.mjs",
     "test-err": "npm run compile && mocha test/test-error.js",
-    "cov": "c8 --reporter=html -o docs -x src/support-lib.js npm run test",
+    "cov": "nyc --reporter=html --report-dir=docs/coverage npm test",
+    "doc": "jsdoc -c jsdoc.config.js -r -d docs/documentation",
     "compile": "jison src/grammar.jison src/lexer.l -o src/calc.js",
     "clean": "rm -f src/calc.js; rm -fR coverage",
     "mocha": "test/scripts/t.sh mocha",
@@ -35,6 +36,8 @@
     "complex.js": "^2.1.1",
     "dotenv": "^16.4.5",
     "jison": "^0.4.18",
+    "jsdoc": "^4.0.2",
+    "nyc": "^15.1.0",
     "recast": "^0.22.0",
     "set-operations": "^2.0.2",
     "shelljs.exec": "^1.1.8"
