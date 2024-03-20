@@ -63,44 +63,67 @@ stringHandler.default = function (op, other) {
   // fill in
   throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
 }
-
+/**
+ * @brief Función para manejar operaciones en cadenas de texto para tipos no específicos.
+ * @param {string} op - La operación a realizar en la cadena.
+ * @param {any} other - El otro operando de la operación.
+ * @returns {string} El resultado de la operación.
+ */
 stringHandler.function = function (op, other) {
-  if(op == 'add') {
+  if (op === 'add') {
     return this + String(other);
   }
-  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
+  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`);
 }
 
+/**
+ * @brief Función para manejar operaciones en cadenas de texto para valores booleanos.
+ * @param {string} op - La operación a realizar en la cadena.
+ * @param {any} other - El otro operando de la operación.
+ * @returns {string} El resultado de la operación.
+ */
 stringHandler.boolean = function (op, other) {
-  if(op == 'add') {
+  if (op === 'add') {
     return this + String(other);
   }
-  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
+  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`);
 }
 
+/**
+ * @brief Función para manejar operaciones en cadenas de texto para objetos.
+ * @param {string} op - La operación a realizar en la cadena.
+ * @param {any} other - El otro operando de la operación.
+ * @returns {string} El resultado de la operación.
+ */
 stringHandler.object = function (op, other) {
-  if(op == 'add') {
+  if (op === 'add') {
     return this + String(other);
   }
-  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
+  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`);
 }
 
+/**
+ * @brief Función para manejar operaciones en cadenas de texto para otras cadenas de texto.
+ * @param {string} op - La operación a realizar en la cadena.
+ * @param {any} other - El otro operando de la operación.
+ * @returns {string} El resultado de la operación.
+ */
 stringHandler.string = function (op, other) {
-  if(op == 'add') {
+  if (op === 'add') {
     return this + other;
   }
-  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
+  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`);
 }
 
+// Extiende los prototipos de los tipos de datos existentes para manejar las operaciones definidas
 for (let op in Operators) {
-  // Extending the boolean class to give error messages for all airthmetic operations
   Boolean.prototype[op] = function (other) {
-    return booleanHandler[typeof other]?.call(this, op, other) || booleanHandler.default.call(this, op, other)
+    return booleanHandler[typeof other]?.call(this, op, other) || booleanHandler.default.call(this, op, other);
   };
   Function.prototype[op] = function (other) {
-    return functionHandler[typeof other]?.call(this, op, other) || functionHandler.default.call(this, op, other)
+    return functionHandler[typeof other]?.call(this, op, other) || functionHandler.default.call(this, op, other);
   };
   String.prototype[op] = function (other) {
-    return stringHandler[typeof other]?.call(this, op, other) || stringHandler.default.call(this, op, other)
-  }
+    return stringHandler[typeof other]?.call(this, op, other) || stringHandler.default.call(this, op, other);
+  };
 }

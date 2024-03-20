@@ -276,6 +276,12 @@ function buildIdentifier(name) {
   };
 }
 
+/**
+ * @brief Construye una expresión de bucle 'while'.
+ * @param {Object} test - La condición de prueba del bucle.
+ * @param {Object} body - El cuerpo del bucle.
+ * @returns {Object} Objeto que representa la expresión de bucle 'while'.
+ */
 function buildWhileExpression(test, body) {
   // fill with your code here
   return {
@@ -332,7 +338,14 @@ function buildWhileExpression(test, body) {
     arguments: [],
   };
 }
-
+/**
+ * @brief Construye una expresión de bucle 'for'.
+ * @param {Object} init - La inicialización del bucle.
+ * @param {Object} test - La condición de prueba del bucle.
+ * @param {Object} update - La actualización del bucle.
+ * @param {Object} body - El cuerpo del bucle.
+ * @returns {Object} Objeto que representa la expresión de bucle 'for'.
+ */
 function buildForExpression(init, test, update, body) {
    return {
     type: "CallExpression",
@@ -392,10 +405,16 @@ function buildForExpression(init, test, update, body) {
    };
 }
 
-function buildArrowFunctionExpression(param, exp) {
+/**function buildArrowFunctionExpression(param, exp) {
 
-}
+}*/
 
+/** 
+ * @brief Construye una expresión de llamada o identificador.
+ * @param {Object} identifier - El identificador o expresión de llamada.
+ * @param {Array} apply - Los argumentos de la llamada, si es una llamada.
+ * @returns {Object} El identificador o expresión de llamada construido.
+ */
 function buildParOrCallExpression(identifier,apply ) {
   if(apply.length === 0) return identifier;
   return buildIdentifierOrCalls(identifier.name, apply);
