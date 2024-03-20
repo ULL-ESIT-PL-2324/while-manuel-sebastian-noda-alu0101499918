@@ -1,0 +1,41 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: npm run test-err
+      id: npm-run-test-err
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: npm run test-err
+        setup-command: npm install
+        command: npm run test-err
+        timeout: 10
+        max-score: 1
+    - name: npm test-error
+      id: npm-test-error
+      uses: education/autograding-command-grader@v1
+      with:
+        test-name: npm test-error
+        setup-command: npm install
+        command: npm run test-err
+        timeout: 10
+        max-score: 1
+    - name: Autograding Reporter
+      uses: education/autograding-grading-reporter@v1
+      env:
+        NPM-RUN-TEST-ERR_RESULTS: "${{steps.npm-run-test-err.outputs.result}}"
+        NPM-TEST-ERROR_RESULTS: "${{steps.npm-test-error.outputs.result}}"
+      with:
+        runners: npm-run-test-err,npm-test-error
