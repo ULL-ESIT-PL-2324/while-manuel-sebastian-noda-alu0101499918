@@ -1,0 +1,2 @@
+f = fun(a) { fun(b) { a+b } },
+print(f(2)(3))

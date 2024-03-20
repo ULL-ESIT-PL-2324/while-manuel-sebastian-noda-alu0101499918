@@ -1,0 +1,4 @@
+fact = fun(n) {
+  !(n == 0) && n * fact(n - 1) || 1
+},
+print(fact(5))

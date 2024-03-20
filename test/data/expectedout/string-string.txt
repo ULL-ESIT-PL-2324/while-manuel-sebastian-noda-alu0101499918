@@ -1,0 +1,7 @@
+a is 42i
+a is 4 + 2i
+a is a letter
+a is true
+a is function() {
+    return Complex("1");
+}

@@ -1,0 +1,10 @@
+{ re: 0, im: 0 }
+false
+{ re: 1, im: 0 }
+{ re: 0, im: 0 }
+{ re: 1, im: 0 }
+{ re: 2, im: 0 }
+{ re: 0, im: 0 }
+{ re: 1, im: 0 }
+{ re: 2, im: 0 }
+{ re: 3, im: 0 }

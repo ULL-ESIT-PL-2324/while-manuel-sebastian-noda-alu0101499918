@@ -1,0 +1,3 @@
+f = fun(x) { x+1 },
+g = fun(x) { x+2 },
+print((f+g)(3)) # 9

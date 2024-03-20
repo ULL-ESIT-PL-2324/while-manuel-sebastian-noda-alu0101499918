@@ -1,0 +1,7 @@
+sum = 0,
+b = for(a = 0; a < 6; a = a+1) {
+  sum = sum + 2 * a
+},
+print(a),
+print(b),
+print(sum)

@@ -1,0 +1,10 @@
+add = fun(f) {
+  fun(g) { 
+    fun(x) { 
+      f(x)+g(x) 
+    } 
+  }
+},
+square = fun(x) { x*x },
+double = fun(x) { 2*x },
+print(add(square)(double)(4)) # 24+0i

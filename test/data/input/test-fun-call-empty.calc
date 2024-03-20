@@ -1,0 +1,2 @@
+f = fun(x) { fun() { print(x) } },
+f(4)()

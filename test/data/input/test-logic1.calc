@@ -1,0 +1,10 @@
+a = !true && true,
+print(a), # false 
+print(!true), # true
+# b = false == false,
+# print(b),
+c = true || false,
+print(c), # true
+# print(true + false),
+d = false || false,
+print(d)  # false

@@ -1,0 +1,3 @@
+x = (fun(x) { 2 })(9),
+print(x), # { re: 2, im: 0 }
+(2)(3) # TypeError: Complex(...) is not a function

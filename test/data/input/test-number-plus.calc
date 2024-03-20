@@ -1,0 +1,3 @@
+print((2 + fun(x) { x + 1})(3)), # { re: 6, im: 0 }
+print(2 + true),                 # { re: 3, im: 0 }
+print(2-2)                       # { re: 0, im: 0 }

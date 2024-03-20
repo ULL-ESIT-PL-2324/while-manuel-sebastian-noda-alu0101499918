@@ -1,0 +1,4 @@
+b = false == false,
+print(b),       # true
+c = true + true # error
+
