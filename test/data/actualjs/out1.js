@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-  const { write, factorial, Complex } = require("/Users/casianorodriguezleon/campus-virtual/2324/pl2324/practicas/while/while-template/src/support-lib.js"); 
+  const { write, factorial, Complex } = require("/home/usuario/practicas/practica_7/while-manuel-sebastian-noda-alu0101499918/src/support-lib.js"); 
   
 /* End of support code */
 

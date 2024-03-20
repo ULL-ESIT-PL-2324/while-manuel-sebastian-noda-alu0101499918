@@ -61,9 +61,36 @@ let stringHandler = Object.create(null); // no prototype
 
 stringHandler.default = function (op, other) {
   // fill in
+  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
 }
 
-// add any code need for symmetry
+stringHandler.function = function (op, other) {
+  if(op == 'add') {
+    return this + String(other);
+  }
+  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
+}
+
+stringHandler.boolean = function (op, other) {
+  if(op == 'add') {
+    return this + String(other);
+  }
+  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
+}
+
+stringHandler.object = function (op, other) {
+  if(op == 'add') {
+    return this + String(other);
+  }
+  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
+}
+
+stringHandler.string = function (op, other) {
+  if(op == 'add') {
+    return this + other;
+  }
+  throw new Error(`String "${this}" does not support "${Operators[op] || op}" for "${other}"`)
+}
 
 for (let op in Operators) {
   // Extending the boolean class to give error messages for all airthmetic operations
@@ -74,6 +101,6 @@ for (let op in Operators) {
     return functionHandler[typeof other]?.call(this, op, other) || functionHandler.default.call(this, op, other)
   };
   String.prototype[op] = function (other) {
-    // fill in
+    return stringHandler[typeof other]?.call(this, op, other) || stringHandler.default.call(this, op, other)
   }
 }

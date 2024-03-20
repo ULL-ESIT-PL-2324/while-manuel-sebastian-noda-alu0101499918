@@ -1,5 +1,4 @@
-const $ = id => '$' + id;
-
+const $ = id => /^[$]/.test(id)? id: '$' + id;
 // Convert a dast to a json object: the problem is that the dast contains
 // sets, which are not serializable. So we convert them to arrays.
 const dast2json =  (dAst) => {

@@ -3,44 +3,80 @@ const { RegexpFromNames } = require('./utils.js');
 
 // Detect what support functions are used: dependency analysis
 function dependencies(dAst) {
-  // fill in with your code here
-  return dAst;
-}
+  const functionNames = Object.keys(require("./support-lib.js"));
 
-// Builds the set of variables that are initialized in the program
-const scopeAnalysis = (dAst) => {
-  const Scope = require('./scope-class.js');
-  let scope = new Scope(null); // global scope
-  let ast = dAst.ast;
-  
-  visit(ast, {
-    visitFunctionExpression(path) {
-      // Use arrowfunctions for developer functions and function expressions for user functions
-      // if (!["ArrowFunctionExpression", "FunctionExpression"].includes(node.type)) return false;
-      // Fill in with your code here
-    },
-    visitAssignmentExpression(path) {
-      // Fill in with your code here
-    },
-    visitIdentifier(path) {
-      // Fill in with your code here
+  dAst.dependencies = new Set([]);
+  visit(dAst.ast, {
+    visitCallExpression(path) {
+      const node = path.node;
+      let name = node.callee.name;
+      if (functionNames.includes(name)) {
+        dAst.dependencies.add(name);
+      }
+      this.traverse(path);
     }
   });
 
-  // Insert declarations at the beginning of the programs
+  return dAst;
+}
+// Builds the set of variables that are initialized in the program
+
+const scopeAnalysis = (dAst) => {
+  const Scope = require('./scope-class.js');
+  let scope = new Scope(null);
+  let ast = dAst.ast;
+
+  visit(ast, {
+    visitFunctionExpression(path) {
+      let node = path.node;
+      scope = new Scope(scope);  // The current scope becomes this function scope
+
+      // mark parameters as initialized
+      let params = node.params;
+      for (let param of params) {
+        scope.setAsInitialized(param.name);
+      }
+      this.traverse(path);
+      if (scope.length > 0) {
+        node.body.body.unshift(scope.buildDeclaration());
+      }
+      node.scope = scope;
+      let d = scope.notDeclaredMessage();
+      if (d) console.error(d + ' used in function scope');
+
+      scope = scope.parent;
+    },
+    visitAssignmentExpression(path) {
+      const node = path.node;
+      if (node.left.type === 'Identifier') {
+        let name = node.left.name;
+        if (name && name && /^[$]/.test(name) && !scope.has(name)) {
+          if (!dAst.dependencies.has(name)) {
+            scope.add(name);
+          }
+        }
+      }
+      this.traverse(path);
+    },
+    visitIdentifier(path) {
+      let name = path.node.name;
+      if (/^[$]/.test(name) && !dAst.dependencies.has(name)) {
+        scope.setAsUsed(name);
+      }
+      this.traverse(path);
+    }
+  });
+
   if (scope.length > 0) {
     ast.body.unshift(scope.buildDeclaration());
   }
 
-  // Save scope info as a property of the program node
   ast.scope = scope;
-  
-  // Show warnings if any
   let d = scope.notDeclaredMessage();
-  if (d) console.error(d + ' used in global scope')
+  if (d) console.error(d);
 
   return dAst;
-};
+}
 
 module.exports = {
   scopeAnalysis,

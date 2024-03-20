@@ -1,5 +1,5 @@
 %{
-const reservedWords = [ /* fill in */ ]  
+const reservedWords = ["fun", "true", "false", "i", "while", "for"]  
 const predefinedIds = ["print", "write" ]
 
 function removeQuotes(s) {
@@ -7,11 +7,14 @@ function removeQuotes(s) {
 }
 
 const idOrReserved = text => {
-                 // fill in
+                 if (reservedWords.find(w => w == text)) return text.toUpperCase();
+                 if (predefinedIds.find(w => w == text)) return 'PID'
+                 return 'ID';
                }
 %}
 number [0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)?"i"?|"i"
-string  /* fill in */
+string \"([^\"\\]|\\.)*\"
+
 %%
 \s+            /* skip whites */;
 "#".*          /* skip comments */;

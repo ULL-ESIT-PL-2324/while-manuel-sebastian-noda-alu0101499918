@@ -63,9 +63,9 @@ e:
   | TRUE                { $$ = buildLiteral(true); }
   | FALSE               { $$ = buildLiteral(false); }
   | STRING              { $$ = buildLiteral($STRING); }
-  | WHILE  // fill in
-  | FOR    // fill in
-  | PID '(' eList ')'   { /* fill in. Allow for list of arguments */ }
+  | WHILE   e '{' e '}' { $$ = buildWhileExpression($e1, $e2);}
+  | FOR    '(' e ';' e ';' e ')' '{' e '}' {$$ = buildForExpression($e1, $e2, $e3, $e4);}
+  | PID '(' eList ')'   { $$ = buildCallExpression($PID, $eList, true);}
   | ID  apply           { $$ = buildParOrCallExpression(buildIdentifier($($ID)), $apply); }
   | FUN '(' idOrEmpty ')' '{' e '}'   
                         { $$ = buildFunctionExpression($idOrEmpty, $e); } 
@@ -73,7 +73,7 @@ e:
 
 apply:
     /* empty */      { $$ = []; }
-  | '('  ')' apply   { $$ = [ null ].concat($apply); }
+  | '('  ')' apply   { $$ = [null].concat($apply); }
   | '(' e ')' apply  { $$ = [$e].concat($apply); }
 ;
 
@@ -82,6 +82,7 @@ idOrEmpty:
   | ID            { $$ = [ buildIdentifier($($ID)) ]; }   
 ;
 
-eList: 
-  // fill in
+eList:         {$$ = [];}
+ | eList ';' e {$$ = $eList.concat([$e]); }
+ | e           {$$ = [$e]; }
 ;
