@@ -1,1 +1,5 @@
-f()()
+print("a is "+ 4+2i),       # string + number
+print("a is "+ (4+2i)),     # string + number
+print("a is "+ "a letter"), # string + string
+print("a is "+ true),       # string + boolean
+print("a is "+ fun() { 1 }) # string + function

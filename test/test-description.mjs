@@ -161,5 +161,23 @@ export default [
     "actualjs": "out-logic1.js",
     "expectedjs": "correct-logic1.js",
     "expectedout": "correct-out-logic1.txt"
+  },
+  {
+    "input": "test-number-and.calc",
+    "actualjs": "out-number-and.js",
+    "expectedjs": "correct-number-and.js",
+    "expectedout": "correct-out-number-and.txt"
+  },
+  {
+    "input": "test-number-call.calc",
+    "actualjs": "out-number-call.js",
+    "expectedjs": "correct-number-call.js",
+    "expectedout": "correct-out-number-call.txt"
+  },
+  {
+    "input": "test-number-plus.calc",
+    "actualjs": "out-number-plus.js",
+    "expectedjs": "correct-number-plus.js",
+    "expectedout": "correct-number-plus.js",
   }
 ];
