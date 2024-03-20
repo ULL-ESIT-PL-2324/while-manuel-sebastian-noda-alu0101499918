@@ -387,7 +387,7 @@ function buildForExpression(init, test, update, body) {
           },
         }, 
         {
-          type: "ReturnStatement",
+          type:"ReturnStatement",
           argument: {
             type: "Identifier",
             name: "result"
